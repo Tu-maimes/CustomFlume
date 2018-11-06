@@ -20,7 +20,7 @@ import java.util.HashMap;
  */
 public class RegexTest {
     public static void main(String[] args) throws IOException {
-//        RandomAccessFile randomAccessFile = new RandomAccessFile("C:\\Users\\lxd\\Desktop\\文件前缀文件类型整理数据样例汇总--big\\上传文件样例--big\\FSD_100_10101_20180125_04_98_30101.txt", "r");
+        RandomAccessFile randomAccessFile = new RandomAccessFile("C:\\Users\\lxd\\Desktop\\文件前缀文件类型整理数据样例汇总--big\\上传文件样例--big\\FSD_100_10101_20180125_04_98_30101.txt", "r");
 //        ReadFsdTxt readDbf = new ReadFsdTxt(randomAccessFile, "dd", ",", 10, true);
 //        String st = "24,24,8,3,16,16,6,1,8,6,4,17,9,16,16,3,12,20,1,5,4,10,10,7,9,24,8,10,1,16,9,16,20,60,9,9,17,4,1,16,10,16,16,7,8,1,16,7,7,16,16,8,10,1,1,1,1,8,1,6,10,12,2,9,1,1,1,2,2,5,6,7,16,16,16,16,1,20,16,1,16,16,16,60,16,16,12,12,12,18,18";
 //        Event event = readDbf.readFSDFour(Arrays.asList(st.split(",")));
