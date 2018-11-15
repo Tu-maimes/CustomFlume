@@ -1,12 +1,9 @@
 package com.ysstest.source.utils;
 
-import com.linuxense.javadbf.DBFReader;
-import com.ysstest.file.EncodingDetect;
 import org.apache.flume.Event;
 import org.apache.flume.event.EventBuilder;
 
 import java.io.FileInputStream;
-import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 
 /**
@@ -52,7 +49,7 @@ public class ReadDbf {
                 return null;
             }
 
-            Event event = EventBuilder.withBody(Transcoding.transcodByte(rowFirst.toString(),  reader.getCharset()));
+            Event event = EventBuilder.withBody(Transcoding.transcodByte(rowFirst.toString(), reader.getCharset()));
             event.getHeaders().put(currentRecord, String.valueOf(ROW));
             ROW++;
             return event;

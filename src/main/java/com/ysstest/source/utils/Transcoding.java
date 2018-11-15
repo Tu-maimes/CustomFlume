@@ -30,21 +30,26 @@ public class Transcoding {
             e.printStackTrace();
             System.out.println("转码出现异常!");
         }
+
         return null;
     }
 
-    public static byte[] transcodByte(String data) throws UnsupportedEncodingException {
+    public static byte[] transcodByte(String data) {
         String s = null;
-        s = new String(data.getBytes("8859_1"), Charset.forName("gbk"));
         try {
-            return data.getBytes("utf-8");
+            s = new String(data.getBytes("ISO-8859-1"), Charset.forName("gbk"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            System.out.println("转码出现异常!");
+        }
+        try {
+            return s.getBytes("utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             System.out.println("转码出现异常!");
         }
         return null;
     }
-
     public static byte[] gbkToUTF(String data) {
         try {
             return new String(data.getBytes("utf-8"), Charset.forName("utf-8")).replaceAll(" ", "").getBytes("utf-8");

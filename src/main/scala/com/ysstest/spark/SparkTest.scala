@@ -11,8 +11,10 @@ import org.apache.spark.sql.SparkSession
   */
 object SparkTest {
   def main(args: Array[String]): Unit = {
-    val sparkSession = SparkSession.builder().master("local[*]").appName("统计数据的条数").getOrCreate()
-    val frame = sparkSession.read.text("file:///C:\\Users\\lxd\\Desktop\\dd1.tsv")
-    println(frame.count())
+//    val sparkSession = SparkSession.builder().master("local[*]").appName("统计数据的条数").getOrCreate()
+//    val frame = sparkSession.read.text("/yss/guzhi/interface/20181114/sjsmx")
+//    println(frame.count())
+
+    println(LoadResource.driver)
   }
 }

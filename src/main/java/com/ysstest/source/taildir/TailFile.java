@@ -20,7 +20,6 @@
 package com.ysstest.source.taildir;
 
 import com.google.common.collect.Lists;
-import com.ysstest.file.EncodingDetect;
 import com.ysstest.source.utils.*;
 import org.apache.flume.Event;
 import org.apache.flume.event.EventBuilder;
@@ -125,7 +124,6 @@ public class TailFile {
         this.regexFsdJY = regexFsdJY;
         this.fsdJYBytes = fsdJYBytes;
         fileName = file.getName().toLowerCase();
-        String fileEncode = EncodingDetect.getJavaEncode(path);
         System.out.println(LocalDateTime.now() + "    Tail创建文件的对象准备开始读取文件:" + file.getAbsolutePath());
         if (fileName.endsWith(".dbf") || FilterFile.filtrationDbf(fileName, prefixList)) {
             readDbf = new ReadDbf(this.fileInputStream, currentRecord, csvSeparator, eventLines, headFile);
@@ -135,7 +133,7 @@ public class TailFile {
             readXlsx = new ReadXlsx(new HSSFWorkbook(this.fileInputStream), currentRecord, csvSeparator, eventLines, headFile);
         } else if (fileName.endsWith(".xlsx")) {
             readXlsx = new ReadXlsx(new XSSFWorkbook(this.fileInputStream), currentRecord, csvSeparator, eventLines, headFile);
-        } else if (fileName.endsWith(".txt") || fileName.endsWith(".tsv")) {
+        } else if (fileName.endsWith(".txt")||fileName.endsWith(".tsv")) {
             readFsdTxt = new ReadFsdTxt(this.raf, currentRecord, csvSeparator, eventLines, headFile);
         }
         /*---------------------------------------------------------------*/
@@ -253,19 +251,15 @@ public class TailFile {
             }
         } else if (FilterFile.filtrationTxt(fileName, regexFsdFour)) {
             //FSD 04
-            event = readFsdTxt.readFSDFour(Arrays.asList(fsdFourBytes.split(",")));
-            if (event == null) {
-                setPos(raf.length());
-            }
+            event = readFsdTxt.readFSD(Arrays.asList(fsdFourBytes.split(",")));
+            setPos(raf.length());
         } else if (FilterFile.filtrationTxt(fileName, regexFsdSix)) {
             //FSD 06
-            event = readFsdTxt.readFSDFour(Arrays.asList(fsdSixBytes.split(",")));
-            if (event == null) {
-                setPos(raf.length());
-            }
+            event = readFsdTxt.readFSD(Arrays.asList(fsdSixBytes.split(",")));
+            setPos(raf.length());
         } else if (FilterFile.filtrationTxt(fileName, regexFsdJY)) {
             //FSD JY
-            event = readFsdTxt.readFSDFour(Arrays.asList(fsdJYBytes.split(",")));
+            event = readFsdTxt.readFSD(Arrays.asList(fsdJYBytes.split(",")));
             setPos(raf.length());
         } else if (fileName.endsWith(".tsv")) {
             event = readFsdTxt.readTxt("\t");

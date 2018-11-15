@@ -1,11 +1,9 @@
 package com.ysstest.source.utils;
 
-import com.ysstest.file.EncodingDetect;
 import org.apache.flume.Event;
 import org.apache.flume.event.EventBuilder;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
@@ -87,11 +85,6 @@ public class ReadFsdTxt {
                 rowData = new String(rowData.getBytes("iso-8859-1"), Charset.forName("gbk"));
                 byte[] gbks = rowData.getBytes("gbk");
                 if (gbks.length == 8) {
-                    if (contentData.length() > 1) {
-                        contentData.delete(contentData.length() - 1, contentData.length());
-                    } else {
-                        return null;
-                    }
 //                    contentData.append(rowData);
                     Event event = EventBuilder.withBody(Transcoding.gbkToUTF(contentData.toString()));
                     event.getHeaders().put(currentRecord, String.valueOf(ROW));
@@ -130,7 +123,7 @@ public class ReadFsdTxt {
         return event;
     }
 
-    public Event readFSDFour(List<String> fieldByteList) throws IOException {
+    public Event readFSD(List<String> fieldByteList) throws IOException {
         if (ROW == 0) {
             if (head) {
                 Event event = EventBuilder.withBody(Transcoding.gbkToUTF(readHead()));
@@ -171,34 +164,4 @@ public class ReadFsdTxt {
         return event;
     }
 
-
-    public static void main(String[] args) throws IOException {
-        RandomAccessFile randomAccessFile = new RandomAccessFile("C:\\Users\\lxd\\Desktop\\文件前缀文件类型整理数据样例汇总--big\\上传文件样例--big\\I016101S17031000DEFERMATCH.TXT", "r");
-        ReadFsdTxt dd = new ReadFsdTxt(randomAccessFile, "dd", ",", 9, true);
-        String s = "24,24,8,3,16,16,6,1,8,6,4,17,9,16,16,3,12,20,1,5,4,10,10,7,9,24,8,10,1,16,9,16,20,60,9,9,17,4,1,16,10,16,16,7,8,1,16,7,7,16,16,8,10,1,1,1,1,8,1,6,10,12,2,9,1,1,1,2,2,5,6,7,16,16,16,16,1,20,16,1,16,16,16,60,16,16,12,12,12,18,18";
-        String fileEncode = EncodingDetect.getJavaEncode("C:\\Users\\lxd\\Desktop\\文件前缀文件类型整理数据样例汇总--big\\上传文件样例--big\\FSD_100_102000000002_20180124_JY.TXT");
-        System.out.println(fileEncode);
-        while (true) {
-            String s1 = randomAccessFile.readLine();
-            System.out.println(s1);
-            if (s1 == null) {
-                break;
-            }
-        }
-
-//        randomAccessFile.seek(randomAccessFile.length() - 10);
-//        String s1 = randomAccessFile.readLine();
-//        System.out.println(s1);
-
-
-//        for (int a = 0; a < 15; a++) {
-//            Event event = dd.readFSDFour(Arrays.asList(s.split(",")));
-//            if (event != null) {
-//                System.out.println(new String(event.getHeaders().get("dd")) + new String(event.getBody()));
-//            } else {
-//                break;
-//            }
-//        }
-
-    }
 }
